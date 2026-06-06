@@ -7,14 +7,18 @@ class Settings(BaseSettings):
     
     # Embeddings
     embedding_model: str = "ai-forever/ru-en-RoSBERTa"
-    embedding_dimension: int = 1024  # размерность RoSBERTa
-    embedding_device: str = "cuda"   # у тебя RTX 5060 Ti
+    embedding_dimension: int = 1024
+    embedding_device: str = "cuda" 
     
     # Qdrant
     qdrant_host: str = "localhost"
     qdrant_port: int = 6333
     qdrant_collection: str = "crag_documents"
-    
+
+    # Chunking
+    chunk_size: int = 1000
+    chunk_overlap: int = 200
+
     class Config:
         env_file = ".env"
 
