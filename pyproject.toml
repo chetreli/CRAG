@@ -17,6 +17,7 @@ dependencies = [
     "torch==2.7.1+cu128",
     "rank-bm25>=0.2.2",
     "ddgs>=9.14.4",
+    "langgraph>=1.2.4",
 ]
 
 [[tool.uv.index]]

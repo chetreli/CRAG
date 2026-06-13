@@ -19,6 +19,16 @@ class Settings(BaseSettings):
     chunk_size: int = 1000
     chunk_overlap: int = 200
 
+    # Retrieval
+    retrieval_top_k: int = 10
+
+    # Grader
+    grader_threshold: float = 0.7
+    min_relevant_chunks: int = 2
+    min_avg_score: float = 0.6
+
+    # Agent
+    max_rewrite_attempts: int = 1
     class Config:
         env_file = ".env"
 
