@@ -5,6 +5,7 @@ from qdrant_client.models import Record, ScoredPoint
 
 from src.retrieval.dence_retrieval import dense_search
 from src.retrieval.sparse_retrieval import build_bm25_index, sparse_search
+from src.retrieval.reranker import rerank_chunks
 
 
 @dataclass
@@ -45,19 +46,24 @@ def hybrid_search(
     client: QdrantClient,
     collection_name: str,
     top_k: int = 10,
+    use_hyde: bool = False,
+    use_reranker: bool = False,
 ) -> list[RetrievedChunk]:
-    # Dense поиск
-    dense_results = dense_search(query, model, client, collection_name, top_k=top_k * 2)
+    # Если будем делать re-ranking — берём больше кандидатов на входе
+    fetch_k = top_k * 3 if use_reranker else top_k * 2
 
-    # Sparse BM25 поиск
+    dense_results = dense_search(
+        query, model, client, collection_name,
+        top_k=fetch_k, use_hyde=use_hyde,
+    )
+
     bm25, all_points = build_bm25_index(client, collection_name)
-    sparse_results = sparse_search(query, bm25, all_points, top_k=top_k * 2)
+    sparse_results = sparse_search(query, bm25, all_points, top_k=fetch_k)
 
-    # RRF слияние
     ranked, doc_map = reciprocal_rank_fusion(dense_results, sparse_results)
 
     chunks = []
-    for doc_id, score in ranked[:top_k]:
+    for doc_id, score in ranked[:fetch_k]:
         payload = doc_map[doc_id]
         chunks.append(RetrievedChunk(
             text=payload.get("text", ""),
@@ -66,5 +72,10 @@ def hybrid_search(
             chunk_id=payload.get("chunk_id", -1),
             score=score,
         ))
+
+    if use_reranker:
+        chunks = rerank_chunks(query, chunks, top_k=top_k)
+    else:
+        chunks = chunks[:top_k]
 
     return chunks
