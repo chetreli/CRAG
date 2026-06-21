@@ -1,5 +1,4 @@
 from pydantic_settings import BaseSettings
-
 class Settings(BaseSettings):
     # LLM
     ollama_base_url: str = "http://localhost:11434"
@@ -26,6 +25,11 @@ class Settings(BaseSettings):
     grader_threshold: float = 0.7
     min_relevant_chunks: int = 2
     min_avg_score: float = 0.6
+
+    #Langfusion
+    langfuse_secret_key: str
+    langfuse_public_key: str
+    langfuse_host: str
 
     # Agent
     max_rewrite_attempts: int = 1

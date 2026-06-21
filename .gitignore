@@ -10,6 +10,8 @@ wheels/
 .env
 *.env
 !.env.example
-
+#
+.csv
+*.env
 # Virtual environments
 .venv

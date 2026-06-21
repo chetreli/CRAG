@@ -23,3 +23,5 @@ class AgentState(TypedDict):
     source: str  # "local" | "web" | "no_context"
     # История сообщений для memory
     messages: Annotated[list, add_messages]
+    #идентификатор для tracing
+    _trace_id: str | None
