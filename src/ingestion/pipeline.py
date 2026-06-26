@@ -1,11 +1,13 @@
 from pathlib import Path
+
 from qdrant_client import QdrantClient
 from sentence_transformers import SentenceTransformer
 
-from src.ingestion.loaders import load_document, load_directory
+from src.config.setting import settings
 from src.ingestion.chunker import chunk_documents
 from src.ingestion.embedder import embed_and_index
-from src.config.setting import settings
+from src.ingestion.loaders import load_directory, load_document
+from src.retrieval.bm25_cache import invalidate_cache
 
 
 def run_ingestion_pipeline(
@@ -44,4 +46,5 @@ def run_ingestion_pipeline(
     )
 
     embed_and_index(chunks, model, client, collection_name)
+    invalidate_cache(collection_name)
     print("=== Pipeline завершён ✓ ===")

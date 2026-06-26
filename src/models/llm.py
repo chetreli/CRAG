@@ -1,5 +1,7 @@
 import re
+
 import ollama
+
 from src.config.setting import settings
 
 
@@ -30,14 +32,14 @@ def extract_response(content: str, thinking: str | None = None) -> str:
         for marker in markers:
             idx = thinking.rfind(marker)
             if idx != -1:
-                answer = thinking[idx + len(marker):].strip()
+                answer = thinking[idx + len(marker) :].strip()
                 # Берём первую строку после маркера
                 first_line = answer.split("\n")[0].strip()
                 if len(first_line) > 5:
                     return first_line
 
         # Fallback — последняя завершённая строка (не обрезанная)
-        lines = [l.strip() for l in thinking.split("\n") if l.strip()]
+        lines = [line.strip() for line in thinking.split("\n") if line.strip()]
         # Ищем последнюю строку которая заканчивается точкой или кавычкой
         for line in reversed(lines[:-1]):  # пропускаем последнюю — она обрезана
             if line.endswith((".", "»", '"', "знаний", "языке")):

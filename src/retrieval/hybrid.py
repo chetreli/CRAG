@@ -1,11 +1,13 @@
 from dataclasses import dataclass
-from sentence_transformers import SentenceTransformer
+
 from qdrant_client import QdrantClient
 from qdrant_client.models import Record, ScoredPoint
+from sentence_transformers import SentenceTransformer
 
+from src.retrieval.bm25_cache import get_cached_bm25_index
 from src.retrieval.dence_retrieval import dense_search
-from src.retrieval.sparse_retrieval import build_bm25_index, sparse_search
 from src.retrieval.reranker import rerank_chunks
+from src.retrieval.sparse_retrieval import sparse_search
 
 
 @dataclass
@@ -53,11 +55,15 @@ def hybrid_search(
     fetch_k = top_k * 3 if use_reranker else top_k * 2
 
     dense_results = dense_search(
-        query, model, client, collection_name,
-        top_k=fetch_k, use_hyde=use_hyde,
+        query,
+        model,
+        client,
+        collection_name,
+        top_k=fetch_k,
+        use_hyde=use_hyde,
     )
 
-    bm25, all_points = build_bm25_index(client, collection_name)
+    bm25, all_points = get_cached_bm25_index(client, collection_name)
     sparse_results = sparse_search(query, bm25, all_points, top_k=fetch_k)
 
     ranked, doc_map = reciprocal_rank_fusion(dense_results, sparse_results)
@@ -65,13 +71,15 @@ def hybrid_search(
     chunks = []
     for doc_id, score in ranked[:fetch_k]:
         payload = doc_map[doc_id]
-        chunks.append(RetrievedChunk(
-            text=payload.get("text", ""),
-            source=payload.get("source", ""),
-            file_name=payload.get("file_name", "unknown"),
-            chunk_id=payload.get("chunk_id", -1),
-            score=score,
-        ))
+        chunks.append(
+            RetrievedChunk(
+                text=payload.get("text", ""),
+                source=payload.get("source", ""),
+                file_name=payload.get("file_name", "unknown"),
+                chunk_id=payload.get("chunk_id", -1),
+                score=score,
+            )
+        )
 
     if use_reranker:
         chunks = rerank_chunks(query, chunks, top_k=top_k)

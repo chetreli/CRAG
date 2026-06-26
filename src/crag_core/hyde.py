@@ -1,6 +1,6 @@
 from sentence_transformers import SentenceTransformer
-from src.models.llm import generate
 
+from src.models.llm import generate
 
 HYDE_SYSTEM = """/no_think
 Ты пишешь короткий гипотетический ответ на вопрос, как если бы он был фрагментом из учебника или энциклопедии.

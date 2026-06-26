@@ -1,7 +1,6 @@
+from src.crag_core.web_search import WebResult, format_web_results
 from src.models.llm import generate
 from src.retrieval.hybrid import RetrievedChunk
-from src.crag_core.web_search import WebResult, format_web_results
-
 
 GENERATOR_SYSTEM = """/no_think
 Ты — helpful ассистент отвечающий на вопросы на основе предоставленного контекста.
@@ -32,10 +31,7 @@ GENERATOR_PROMPT_WEB = """/no_think
 def _format_chunks(chunks: list[RetrievedChunk]) -> str:
     parts = []
     for i, chunk in enumerate(chunks, 1):
-        parts.append(
-            f"[{i}] Источник: {chunk.file_name}\n"
-            f"{chunk.text}"
-        )
+        parts.append(f"[{i}] Источник: {chunk.file_name}\n{chunk.text}")
     return "\n\n".join(parts)
 
 

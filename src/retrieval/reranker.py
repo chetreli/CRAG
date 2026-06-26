@@ -1,5 +1,6 @@
-from FlagEmbedding import FlagReranker
 from dataclasses import dataclass
+
+from FlagEmbedding import FlagReranker
 
 
 @dataclass

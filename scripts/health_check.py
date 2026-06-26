@@ -1,6 +1,7 @@
 import torch
-from sentence_transformers import SentenceTransformer
 from qdrant_client import QdrantClient
+from sentence_transformers import SentenceTransformer
+
 
 def check_gpu():
     if torch.cuda.is_available():
@@ -9,15 +10,18 @@ def check_gpu():
     else:
         print("GPU не найден, используется CPU")
 
+
 def check_embeddings():
     model = SentenceTransformer("ai-forever/ru-en-RoSBERTa")
     emb = model.encode(["тест"], normalize_embeddings=True)
     print(f"Эмбеддинги: размер {emb.shape[1]} ")
 
+
 def check_qdrant():
     client = QdrantClient(host="localhost", port=6333)
     info = client.get_collections()
     print(f"Qdrant: подключен, коллекций {len(info.collections)} ")
+
 
 if __name__ == "__main__":
     check_gpu()

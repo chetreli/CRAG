@@ -1,17 +1,18 @@
 from dataclasses import dataclass
-from sentence_transformers import SentenceTransformer
-from qdrant_client import QdrantClient
 
-from src.retrieval.hybrid import hybrid_search, RetrievedChunk
-from src.crag_core.grader import grade_chunks
-from src.crag_core.query_rewriter import rewrite_query
-from src.crag_core.web_search import web_search
+from qdrant_client import QdrantClient
+from sentence_transformers import SentenceTransformer
+
+from src.config.setting import settings
 from src.crag_core.generator import (
     generate_from_chunks,
     generate_from_web,
     generate_no_context,
 )
-from src.config.setting import settings
+from src.crag_core.grader import grade_chunks
+from src.crag_core.query_rewriter import rewrite_query
+from src.crag_core.web_search import web_search
+from src.retrieval.hybrid import RetrievedChunk, hybrid_search
 
 
 @dataclass
@@ -19,7 +20,7 @@ class CRAGResult:
     query: str
     rewritten_query: str | None
     answer: str
-    source: str  
+    source: str
     relevant_chunks: list[RetrievedChunk]
     used_fallback: bool
 
@@ -48,7 +49,7 @@ def run_crag_pipeline(
     threshold: float = 0.6,
     min_relevant: int = 2,
 ) -> CRAGResult:
-    print(f"\n{'='*50}")
+    print(f"\n{'=' * 50}")
     print(f"Запрос: {query}")
 
     # 1. Retrieval
@@ -68,8 +69,7 @@ def run_crag_pipeline(
         print(f"Переформулировка: {rewritten_query}")
 
         new_chunks = hybrid_search(
-            rewritten_query, model, client,
-            settings.qdrant_collection, top_k=top_k
+            rewritten_query, model, client, settings.qdrant_collection, top_k=top_k
         )
         new_relevant, _ = grade_chunks(rewritten_query, new_chunks, threshold=threshold)
         relevant = relevant + new_relevant

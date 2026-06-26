@@ -1,8 +1,8 @@
 from pathlib import Path
+
+import chardet
 from langchain_community.document_loaders import PyPDFLoader, TextLoader
 from langchain_core.documents import Document
-import chardet
-
 
 SUPPORTED_EXTENSIONS = {".pdf", ".txt", ".md"}
 
@@ -47,11 +47,8 @@ def load_document(file_path: Path) -> list[Document]:
 
 def load_directory(dir_path: Path) -> list[Document]:
     all_docs = []
-    files = [
-        f for f in dir_path.rglob("*")
-        if f.suffix.lower() in SUPPORTED_EXTENSIONS
-    ]
-    
+    files = [f for f in dir_path.rglob("*") if f.suffix.lower() in SUPPORTED_EXTENSIONS]
+
     print(f"Найдено файлов: {len(files)}")
     for file in files:
         try:

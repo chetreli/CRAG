@@ -1,7 +1,8 @@
 import logging
-logging.getLogger("transformers").setLevel(logging.ERROR)
 
 from src.crag_core.query_rewriter import rewrite_query, rewrite_query_multiple
+
+logging.getLogger("transformers").setLevel(logging.ERROR)
 
 queries = [
     "что такое БЖД",

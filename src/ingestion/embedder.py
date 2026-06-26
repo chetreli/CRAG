@@ -1,14 +1,16 @@
+import uuid
+
 from langchain_core.documents import Document
 from qdrant_client import QdrantClient
 from qdrant_client.models import (
     Distance,
-    VectorParams,
     PointStruct,
+    VectorParams,
 )
 from sentence_transformers import SentenceTransformer
-from src.vectorstore.vectorstore import ensure_multivector_collection
+
 from src.crag_core.summarizer import summarize_chunk
-import uuid
+from src.vectorstore.vectorstore import ensure_multivector_collection
 
 
 def ensure_collection(
@@ -100,19 +102,21 @@ def embed_and_index_multivector(
         summary_vec = model.encode(summary_text, normalize_embeddings=True).tolist()
         context_vec = model.encode(context_text, normalize_embeddings=True).tolist()
 
-        points.append(PointStruct(
-            id=str(uuid.uuid4()),
-            vector={
-                "body": body_vec,
-                "summary": summary_vec,
-                "context": context_vec,
-            },
-            payload={
-                "text": text,
-                "summary": summary_text,
-                **chunk.metadata,
-            },
-        ))
+        points.append(
+            PointStruct(
+                id=str(uuid.uuid4()),
+                vector={
+                    "body": body_vec,
+                    "summary": summary_vec,
+                    "context": context_vec,
+                },
+                payload={
+                    "text": text,
+                    "summary": summary_text,
+                    **chunk.metadata,
+                },
+            )
+        )
 
         if (i + 1) % 50 == 0:
             print(f"  обработано {i + 1}/{len(chunks)}")

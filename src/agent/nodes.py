@@ -1,28 +1,28 @@
 import time
 
-from sentence_transformers import SentenceTransformer
 from qdrant_client import QdrantClient
+from sentence_transformers import SentenceTransformer
 
 from src.agent.state import AgentState
-from src.retrieval.hybrid import hybrid_search
-from src.crag_core.grader import grade_chunks
-from src.crag_core.query_rewriter import rewrite_query
-from src.crag_core.web_search import web_search
+from src.config.setting import settings
 from src.crag_core.generator import (
     generate_from_chunks,
     generate_from_web,
     generate_no_context,
 )
-from src.config.setting import settings
-from src.observability.tracing import get_langfuse
+from src.crag_core.grader import grade_chunks_batch
+from src.crag_core.query_rewriter import rewrite_query
+from src.crag_core.web_search import web_search
 from src.observability.prometheus import (
-    crag_retrieve_duration,
-    crag_grade_duration,
+    crag_fallback_total,
     crag_generate_duration,
+    crag_grade_duration,
     crag_relevant_chunks_ratio,
     crag_requests_total,
-    crag_fallback_total,
+    crag_retrieve_duration,
 )
+from src.observability.tracing import get_langfuse
+from src.retrieval.hybrid import hybrid_search
 
 
 def make_nodes(model: SentenceTransformer, client: QdrantClient):
@@ -33,7 +33,9 @@ def make_nodes(model: SentenceTransformer, client: QdrantClient):
         query = state.get("rewritten_query") or state["query"]
 
         chunks = hybrid_search(
-            query, model, client,
+            query,
+            model,
+            client,
             settings.qdrant_collection,
             top_k=settings.retrieval_top_k,
         )
@@ -57,8 +59,10 @@ def make_nodes(model: SentenceTransformer, client: QdrantClient):
         start = time.time()
         query = state.get("rewritten_query") or state["query"]
 
-        relevant, irrelevant = grade_chunks(
-            query, state["chunks"], threshold=settings.grader_threshold,
+        relevant, irrelevant = grade_chunks_batch(
+            query,
+            state["chunks"],
+            threshold=settings.grader_threshold,
         )
         duration = time.time() - start
         crag_grade_duration.observe(duration)

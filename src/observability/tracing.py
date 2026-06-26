@@ -1,6 +1,6 @@
 from langfuse import Langfuse
-from src.config.setting import settings
 
+from src.config.setting import settings
 
 _langfuse_client: Langfuse | None = None
 

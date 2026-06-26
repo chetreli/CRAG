@@ -1,9 +1,11 @@
-from sentence_transformers import SentenceTransformer
-from qdrant_client import QdrantClient
-from src.retrieval.hybrid import hybrid_search
-from src.config.setting import settings
-
 import logging
+
+from qdrant_client import QdrantClient
+from sentence_transformers import SentenceTransformer
+
+from src.config.setting import settings
+from src.retrieval.hybrid import hybrid_search
+
 logging.getLogger("transformers").setLevel(logging.ERROR)
 
 model = SentenceTransformer(settings.embedding_model, device=settings.embedding_device)
@@ -17,6 +19,8 @@ for r in results:
     print(f"score={r.score:.4f} | {r.text[:800]}")
 
 print("\n--- С re-ranking ---")
-results_rerank = hybrid_search(query, model, client, settings.qdrant_collection, top_k=5, use_reranker=True)
+results_rerank = hybrid_search(
+    query, model, client, settings.qdrant_collection, top_k=5, use_reranker=True
+)
 for r in results_rerank:
     print(f"score={r.score:.4f} | {r.text[:800]}")

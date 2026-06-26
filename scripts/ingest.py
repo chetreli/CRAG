@@ -1,4 +1,5 @@
 from pathlib import Path
+
 from src.ingestion.pipeline import run_ingestion_pipeline
 
 if __name__ == "__main__":

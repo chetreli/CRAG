@@ -1,7 +1,9 @@
-from typing import TypedDict, Annotated
+from typing import Annotated, TypedDict
+
 from langgraph.graph.message import add_messages
-from src.retrieval.hybrid import RetrievedChunk
+
 from src.crag_core.web_search import WebResult
+from src.retrieval.hybrid import RetrievedChunk
 
 
 class AgentState(TypedDict):
@@ -23,5 +25,5 @@ class AgentState(TypedDict):
     source: str  # "local" | "web" | "no_context"
     # История сообщений для memory
     messages: Annotated[list, add_messages]
-    #идентификатор для tracing
+    # идентификатор для tracing
     _trace_id: str | None

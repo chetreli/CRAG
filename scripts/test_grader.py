@@ -1,10 +1,12 @@
-
-from sentence_transformers import SentenceTransformer
-from qdrant_client import QdrantClient
-from src.retrieval.hybrid import hybrid_search
-from src.crag_core.grader import grade_chunks, should_fallback
-from src.config.setting import settings
 import logging
+
+from qdrant_client import QdrantClient
+from sentence_transformers import SentenceTransformer
+
+from src.config.setting import settings
+from src.crag_core.grader import grade_chunks, should_fallback
+from src.retrieval.hybrid import hybrid_search
+
 logging.getLogger("transformers").setLevel(logging.ERROR)
 
 model = SentenceTransformer(settings.embedding_model, device=settings.embedding_device)

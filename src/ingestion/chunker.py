@@ -1,11 +1,12 @@
-from langchain_core.documents import Document
-from langchain_text_splitters import RecursiveCharacterTextSplitter
 from pathlib import Path
 
+from langchain_core.documents import Document
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
 RUSSIAN_SEPARATORS = [
-    "\n\n",   
-    "\n",     
-    ". ",     
+    "\n\n",
+    "\n",
+    ". ",
     "! ",
     "? ",
     "… ",

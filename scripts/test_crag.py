@@ -1,8 +1,11 @@
-from sentence_transformers import SentenceTransformer
-from qdrant_client import QdrantClient
-from src.crag_core.pipeline import run_crag_pipeline
-from src.config.setting import settings
 import logging
+
+from qdrant_client import QdrantClient
+from sentence_transformers import SentenceTransformer
+
+from src.config.setting import settings
+from src.crag_core.pipeline import run_crag_pipeline
+
 logging.getLogger("transformers").setLevel(logging.ERROR)
 
 model = SentenceTransformer(settings.embedding_model, device=settings.embedding_device)
@@ -19,4 +22,4 @@ for query in queries:
     print(f"\nИсточник: {result.source}")
     print(f"Fallback: {result.used_fallback}")
     print(f"Ответ:\n{result.answer}")
-    print("="*50)
+    print("=" * 50)

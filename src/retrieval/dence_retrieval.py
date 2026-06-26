@@ -1,8 +1,8 @@
-from sentence_transformers import SentenceTransformer
 from qdrant_client import QdrantClient
 from qdrant_client.models import ScoredPoint
-from src.crag_core.hyde import embed_with_hyde
+from sentence_transformers import SentenceTransformer
 
+from src.crag_core.hyde import embed_with_hyde
 
 
 def dense_search(
@@ -63,8 +63,12 @@ def dense_search_multivector_fusion(
     all_results = {}
     for vector_name in ["body", "summary", "context"]:
         results = dense_search_multivector(
-            query, model, client, collection_name,
-            top_k=top_k * 2, vector_name=vector_name,
+            query,
+            model,
+            client,
+            collection_name,
+            top_k=top_k * 2,
+            vector_name=vector_name,
         )
         for rank, point in enumerate(results):
             doc_id = str(point.id)

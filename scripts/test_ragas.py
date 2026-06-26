@@ -1,8 +1,11 @@
 import logging
-from sentence_transformers import SentenceTransformer
+
 from qdrant_client import QdrantClient
-from src.eval.ragas_eval import run_ragas_evaluation
+from sentence_transformers import SentenceTransformer
+
 from src.config.setting import settings
+from src.eval.ragas_eval import run_ragas_evaluation
+
 logging.getLogger("transformers").setLevel(logging.ERROR)
 
 model = SentenceTransformer(settings.embedding_model, device=settings.embedding_device)

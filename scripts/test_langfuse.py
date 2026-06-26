@@ -1,12 +1,13 @@
-from sentence_transformers import SentenceTransformer
-from qdrant_client import QdrantClient
+import logging
+
 from langchain_core.messages import HumanMessage
+from qdrant_client import QdrantClient
+from sentence_transformers import SentenceTransformer
 
 from src.agent.graph import build_graph
-from src.observability.tracing import get_langfuse
 from src.config.setting import settings
+from src.observability.tracing import get_langfuse
 
-import logging
 logging.getLogger("transformers").setLevel(logging.ERROR)
 
 model = SentenceTransformer(settings.embedding_model, device=settings.embedding_device)
@@ -21,20 +22,22 @@ print(f"Запрос: {query}")
 # Создаём один trace на весь pipeline
 trace = langfuse.trace(name="crag-pipeline", input={"query": query})
 
-result = graph.invoke({
-    "query": query,
-    "chunks": [],
-    "relevant_chunks": [],
-    "irrelevant_chunks": [],
-    "rewritten_query": None,
-    "rewrite_attempts": 0,
-    "web_results": [],
-    "used_fallback": False,
-    "answer": "",
-    "source": "",
-    "messages": [HumanMessage(content=query)],
-    "_trace_id": trace.id,  # передаём id трейса в state
-})
+result = graph.invoke(
+    {
+        "query": query,
+        "chunks": [],
+        "relevant_chunks": [],
+        "irrelevant_chunks": [],
+        "rewritten_query": None,
+        "rewrite_attempts": 0,
+        "web_results": [],
+        "used_fallback": False,
+        "answer": "",
+        "source": "",
+        "messages": [HumanMessage(content=query)],
+        "_trace_id": trace.id,  # передаём id трейса в state
+    }
+)
 
 trace.update(output={"answer": result["answer"], "source": result["source"]})
 

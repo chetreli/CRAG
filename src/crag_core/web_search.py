@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+
 from ddgs import DDGS
 
 
@@ -24,11 +25,13 @@ def web_search(
                 safesearch="moderate",
             )
             for r in raw:
-                results.append(WebResult(
-                    title=r.get("title", ""),
-                    url=r.get("href", ""),
-                    snippet=r.get("body", ""),
-                ))
+                results.append(
+                    WebResult(
+                        title=r.get("title", ""),
+                        url=r.get("href", ""),
+                        snippet=r.get("body", ""),
+                    )
+                )
     except Exception as e:
         print(f"Web search ошибка: {e}")
 
@@ -42,9 +45,5 @@ def format_web_results(results: list[WebResult]) -> str:
 
     parts = []
     for i, r in enumerate(results, 1):
-        parts.append(
-            f"[{i}] {r.title}\n"
-            f"URL: {r.url}\n"
-            f"{r.snippet}"
-        )
+        parts.append(f"[{i}] {r.title}\nURL: {r.url}\n{r.snippet}")
     return "\n\n".join(parts)
