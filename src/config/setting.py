@@ -21,12 +21,13 @@ class Settings(BaseSettings):
     chunk_overlap: int = 200
 
     # Retrieval
-    retrieval_top_k: int = 10
+    retrieval_top_k: int = 7
 
     # Grader
     grader_threshold: float = 0.7
     min_relevant_chunks: int = 2
     min_avg_score: float = 0.6
+    grader_max_tokens: int = 1536
 
     # Langfusion
     langfuse_secret_key: str

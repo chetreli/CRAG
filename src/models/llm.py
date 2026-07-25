@@ -38,7 +38,6 @@ def extract_response(content: str, thinking: str | None = None) -> str:
                 if len(first_line) > 5:
                     return first_line
 
-        # Fallback — последняя завершённая строка (не обрезанная)
         lines = [line.strip() for line in thinking.split("\n") if line.strip()]
         # Ищем последнюю строку которая заканчивается точкой или кавычкой
         for line in reversed(lines[:-1]):  # пропускаем последнюю — она обрезана

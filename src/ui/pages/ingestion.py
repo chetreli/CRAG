@@ -1,7 +1,7 @@
 import requests
 import streamlit as st
 
-from ui.config import API_BASE_URL
+from src.ui.config import API_BASE_URL
 
 st.set_page_config(page_title="Загрузка документов — CRAG", page_icon="📄")
 st.title("📄 Загрузка документов в базу знаний")

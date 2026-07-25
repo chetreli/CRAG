@@ -1,5 +1,6 @@
 import json
 
+from src.config.setting import settings
 from src.models.llm import generate
 from src.retrieval.hybrid import RetrievedChunk
 
@@ -114,7 +115,7 @@ def grade_chunks_batch(
         prompt=prompt,
         system=GRADER_BATCH_SYSTEM,
         temperature=0.0,
-        max_tokens=2048,  # больше токенов, но всего ОДИН вызов вместо N
+        max_tokens=settings.grader_max_tokens,
     )
 
     start = response.find("[")
