@@ -6,12 +6,36 @@ from langchain_core.messages import HumanMessage
 
 from src.api.dependencies import get_crag_graph
 from src.api.schemas import ChatRequest
+from src.cache.answer_cache import get_answer_cache
 from src.observability.tracing import get_langfuse
 
 router = APIRouter()
 
 
 def stream_crag_response(message: str, session_id: str, graph):
+    cache = get_answer_cache()
+
+    cached = cache.get(message)
+    if cached:
+        print(f"[cache] HIT для запроса: {message[:50]}")
+
+        def send(stage, msg, progress):
+            return f"data: {json.dumps({'stage': stage, 'message': msg, 'progress': progress})}\n\n"
+
+        yield send("retrieve", "⚡ Найден кешированный ответ...", 50)
+        yield send("generate", "⚡ Возвращаю кешированный ответ...", 90)
+
+        final = json.dumps({
+            "stage": "done",
+            "message": "✓ Готово (из кеша)",
+            "progress": 100,
+            "answer": cached.answer,
+            "source": cached.source,
+            "used_fallback": cached.used_fallback,
+        })
+        yield f"data: {final}\n\n"
+        return
+
     """Генератор SSE событий с прогрессом выполнения."""
     langfuse = get_langfuse()
     trace = langfuse.trace(name="crag-pipeline", input={"query": message})
@@ -38,11 +62,11 @@ def stream_crag_response(message: str, session_id: str, graph):
     }
 
     progress_map = {
-        "retrieve": ("🔍 Найдены фрагменты, оцениваю релевантность...", 25),
-        "grade":    ("✅ Оценка завершена, генерирую ответ...", 55),
-        "rewrite":  ("✏️ Переформулирую запрос для лучшего поиска...", 40),
-        "fallback": ("🌐 Ищу в интернете...", 70),
-        "generate": ("💬 Генерирую ответ...", 85),
+        "retrieve": ("Найдены фрагменты, оцениваю релевантность...", 25),
+        "grade":    ("Оценка завершена, генерирую ответ...", 55),
+        "rewrite":  ("Переформулирую запрос для лучшего поиска...", 40),
+        "fallback": ("Ищу в интернете...", 70),
+        "generate": ("Генерирую ответ...", 85),
     }
 
     for step_output in graph.stream(state, config=config):
@@ -68,6 +92,7 @@ def stream_crag_response(message: str, session_id: str, graph):
         "source": source,
         "used_fallback": used_fallback,
     })
+    cache.set(message, answer, source, used_fallback)
     yield f"data: {final_data}\n\n"
 
 

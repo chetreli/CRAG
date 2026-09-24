@@ -1,3 +1,4 @@
+import datetime
 import json
 import uuid
 
@@ -86,6 +87,42 @@ if prompt := st.chat_input("Задай вопрос..."):
             status_text.empty()
             answer_placeholder.empty()
             st.error(f"Ошибка соединения с API: {e}")
+
+if st.sidebar.button("📥 Экспортировать историю"):
+    if not st.session_state.messages:
+        st.sidebar.warning("История пуста")
+    else:
+        lines = [
+            "# История диалога CRAG\n",
+            f"_Экспортировано: {datetime.datetime.now().strftime('%d.%m.%Y %H:%M')}_\n",
+            f"_Сессия: {st.session_state.session_id[:8]}..._\n\n",
+            "---\n",
+        ]
+
+        for msg in st.session_state.messages:
+            if msg["role"] == "user":
+                lines.append(f"## 🙋 Вопрос\n\n{msg['content']}\n\n")
+            else:
+                source_label = {
+                    "local": "📚 локальная база",
+                    "web": "🌐 веб-поиск",
+                    "no_context": "⚠️ без контекста",
+                }.get(msg.get("meta", {}).get("source", ""), "")
+
+                lines.append(f"## 🤖 Ответ\n\n{msg['content']}\n\n")
+                if source_label:
+                    lines.append(f"_Источник: {source_label}_\n\n")
+                lines.append("---\n\n")
+
+        markdown_content = "".join(lines)
+        filename = f"crag_history_{datetime.datetime.now().strftime('%Y%m%d_%H%M')}.md"
+
+        st.sidebar.download_button(
+            label="💾 Скачать .md файл",
+            data=markdown_content.encode("utf-8"),
+            file_name=filename,
+            mime="text/markdown",
+        )
 
 if st.sidebar.button("🗑️ Очистить историю"):
     st.session_state.messages = []

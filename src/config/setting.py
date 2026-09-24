@@ -28,6 +28,8 @@ class Settings(BaseSettings):
     min_relevant_chunks: int = 2
     min_avg_score: float = 0.6
     grader_max_tokens: int = 1536
+    grader_mode: str = "llm"
+    embedding_grader_threshold: float = 0.5
 
     # Langfusion
     langfuse_secret_key: str

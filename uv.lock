@@ -140,6 +140,27 @@ wheels = [
 ]
 
 [[package]]
+name = "asyncgui"
+version = "0.6.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/be/44/e697dc6f6e2e564c34135f743bf701ae223ac52885646f5a1bd66dcd8b0a/asyncgui-0.6.3.tar.gz", hash = "sha256:05de49c2221128d3530f010df98491f3553183ec8909d205a0c0250bee5d6e0c", size = 9177, upload-time = "2024-06-27T11:45:18.33Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/38/1c/00470dc25b1e63506fb3087389207571fdb094ce76861f9ce29e6832b57f/asyncgui-0.6.3-py3-none-any.whl", hash = "sha256:46723e65d8bf023e28d141f6a9d38634ef5b97a5236fafdaf80b47e13275a5eb", size = 9145, upload-time = "2024-06-27T11:45:16.18Z" },
+]
+
+[[package]]
+name = "asynckivy"
+version = "0.6.4"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "asyncgui" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/bd/d8/7412fbb4584bf8389aa387a085ab02b49b4885387ac26187b30552f8c88a/asynckivy-0.6.4.tar.gz", hash = "sha256:58c34876a2422464f39df120b659c8b22e044852dd7ff94c5b9cb9dad84e902b", size = 15576, upload-time = "2024-08-20T10:45:29.158Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c0/f3/11ed2f527e0fde70d2c693ff64e6893285d3ae4b08666e808929d6234579/asynckivy-0.6.4-py3-none-any.whl", hash = "sha256:4e26bb6dbc9768d5ca593bae7b36927c06e43915c44b02ddcaa64dc223a2d5e2", size = 18646, upload-time = "2024-08-20T10:45:27.444Z" },
+]
+
+[[package]]
 name = "attrs"
 version = "26.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -307,16 +328,20 @@ name = "crag"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "aiohttp" },
     { name = "chardet" },
     { name = "ddgs" },
     { name = "fastapi" },
     { name = "flagembedding" },
+    { name = "kivy" },
+    { name = "kivymd" },
     { name = "langchain" },
     { name = "langchain-huggingface" },
     { name = "langchain-ollama" },
     { name = "langfuse" },
     { name = "langgraph" },
     { name = "ollama" },
+    { name = "plyer" },
     { name = "prometheus-client" },
     { name = "pydantic-settings" },
     { name = "pypdf" },
@@ -341,16 +366,20 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "aiohttp", specifier = ">=3.14.1" },
     { name = "chardet", specifier = ">=7.4.3" },
     { name = "ddgs", specifier = ">=9.14.4" },
     { name = "fastapi", specifier = ">=0.138.1" },
     { name = "flagembedding", specifier = ">=1.4.0" },
+    { name = "kivy", specifier = ">=2.3.1" },
+    { name = "kivymd", specifier = ">=2.0.0" },
     { name = "langchain", specifier = ">=0.3.0" },
     { name = "langchain-huggingface", specifier = ">=1.2.2" },
     { name = "langchain-ollama", specifier = ">=1.1.0" },
     { name = "langfuse", specifier = ">=2.0,<3.0" },
     { name = "langgraph", specifier = ">=1.2.4" },
     { name = "ollama", specifier = ">=0.3.0" },
+    { name = "plyer", specifier = ">=2.1.0" },
     { name = "prometheus-client", specifier = ">=0.25.0" },
     { name = "pydantic-settings", specifier = ">=2.0.0" },
     { name = "pypdf", specifier = ">=4.0.0" },
@@ -451,6 +480,15 @@ wheels = [
 ]
 
 [[package]]
+name = "docutils"
+version = "0.23"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/39/a4/5180d9afc57e8fca05601dd652bdff19604c218814037fe90ffc7625a50a/docutils-0.23.tar.gz", hash = "sha256:746f5060322511280a1e50eb76846ed6bf2342984b2ac04dc42caa1a8d78799e", size = 2303823, upload-time = "2026-05-27T17:41:06.934Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/32/91/30151a39f7570f448ed84529390628a651d7f27c87d73c9b887f8189695e/docutils-0.23-py3-none-any.whl", hash = "sha256:25d013af9bf23bc1c7b2b093dff4208166c53a94786c9e447808335ef1185fea", size = 634701, upload-time = "2026-05-27T17:40:58.442Z" },
+]
+
+[[package]]
 name = "fake-useragent"
 version = "2.2.0"
 source = { registry = "https://pypi.org/simple" }
@@ -482,6 +520,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/e6/dc/be6cbe99670cd6e4ad387123647cb08e0c32975e223f82551e914c5568a6/filelock-3.29.4.tar.gz", hash = "sha256:10cdb3656fc44541cdf30652a93fb10ec6b05325620eb316bd26893e4201538a", size = 63028, upload-time = "2026-06-13T16:12:00.744Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/13/37/a065dc3bd6e49423a6532c642ca7378d3f467b1ef44c2800c937af7f9739/filelock-3.29.4-py3-none-any.whl", hash = "sha256:dac1648087d5115554850d113e7dd8c83ab2d38e3435dde2d4f163847e57b767", size = 42757, upload-time = "2026-06-13T16:11:59.582Z" },
+]
+
+[[package]]
+name = "filetype"
+version = "1.2.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/bb/29/745f7d30d47fe0f251d3ad3dc2978a23141917661998763bebb6da007eb1/filetype-1.2.0.tar.gz", hash = "sha256:66b56cd6474bf41d8c54660347d37afcc3f7d1970648de365c102ef77548aadb", size = 998020, upload-time = "2022-11-02T17:34:04.141Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/18/79/1b8fa1bb3568781e84c9200f951c735f3f157429f44be0495da55894d620/filetype-1.2.0-py2.py3-none-any.whl", hash = "sha256:7ce71b6880181241cf7ac8697a2f1eb6a8bd9b429f7ad6d27b8db9ba5f1c2d25", size = 19970, upload-time = "2022-11-02T17:34:01.425Z" },
 ]
 
 [[package]]
@@ -905,6 +952,82 @@ wheels = [
 ]
 
 [[package]]
+name = "kivy"
+version = "2.3.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "docutils" },
+    { name = "filetype" },
+    { name = "kivy-deps-angle", marker = "sys_platform == 'win32'" },
+    { name = "kivy-deps-glew", marker = "sys_platform == 'win32'" },
+    { name = "kivy-deps-sdl2", marker = "sys_platform == 'win32'" },
+    { name = "kivy-garden" },
+    { name = "pygments" },
+    { name = "pypiwin32", marker = "sys_platform == 'win32'" },
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/de/48/c40f023dc103bdbd56db11facbb2d0ecbf4b019f7392875ee2a8227cb51e/Kivy-2.3.1.tar.gz", hash = "sha256:0833949e3502cdb4abcf9c1da4384674045ad7d85644313aa1ee7573f3b4f9d9", size = 23967306, upload-time = "2024-12-26T16:13:49.299Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/de/57/ae1c82d8e017776934659a8cbba19f9b2e870146ad61d825b9061dd94e40/Kivy-2.3.1-cp312-cp312-macosx_10_15_universal2.whl", hash = "sha256:3f74679ef305f0ed0d8bb3599a2dddc80ffc81157bdc07947498dd689fc9a5d9", size = 11122180, upload-time = "2024-12-26T16:22:43.165Z" },
+    { url = "https://files.pythonhosted.org/packages/c1/6b/227e059c9c124632ca3dbbcb24301ec06aedf80f6708cf15588bb3f0a708/Kivy-2.3.1-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:663e9b2fe5002f53371b3ad3712dccdaaa96905bbeaa83d7c7e64f3c44fec94e", size = 22740609, upload-time = "2024-12-26T18:27:51.985Z" },
+    { url = "https://files.pythonhosted.org/packages/5b/17/e11a5b5778869ea4ec013d29c2fb50829226d6da2cc4d8ce91f27bf0a773/Kivy-2.3.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:2be79fe1494b6e60cb5aa5f124c37961530417cf27a53171b5a72c9e4c7d41cf", size = 23114729, upload-time = "2024-12-26T18:27:57.197Z" },
+    { url = "https://files.pythonhosted.org/packages/25/f2/5dd333fc5917030bdc3daa321eb9c465886618f76b41f9dad92dd2f25928/Kivy-2.3.1-cp312-cp312-win_amd64.whl", hash = "sha256:2046f6608d17b6c1a0530ac9aa127307fa25f6f75764f1d60428a1c0f6c0af88", size = 4562687, upload-time = "2024-12-26T16:13:31.375Z" },
+]
+
+[[package]]
+name = "kivy-deps-angle"
+version = "0.4.0"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c1/89/bb8b9a0fee422972fcf38a406ee9d0b1636968d7d2b5e97aafea8fdec251/kivy_deps.angle-0.4.0-cp312-cp312-win32.whl", hash = "sha256:4fa7a6366899fba13f7624baf4645787165f45731db08d14557da29c12ee48f0", size = 4588969, upload-time = "2023-12-08T09:45:36.62Z" },
+    { url = "https://files.pythonhosted.org/packages/c7/f2/d1500b880d3079454af0f935408ddd37cfce4fd11f53d0917e169d478869/kivy_deps.angle-0.4.0-cp312-cp312-win_amd64.whl", hash = "sha256:668e670d4afd2551af0af2c627ceb0feac884bd799fb6a3dff78fdbfa2ea0451", size = 5130935, upload-time = "2023-12-08T09:46:38.767Z" },
+]
+
+[[package]]
+name = "kivy-deps-glew"
+version = "0.3.1"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2b/3b/a960053dccd627e4483db4765fa84318a831cbf3af648aee20297ae56815/kivy_deps.glew-0.3.1-cp312-cp312-win32.whl", hash = "sha256:b64ee4e445a04bc7c848c0261a6045fc2f0944cc05d7f953e3860b49f2703424", size = 126458, upload-time = "2023-12-06T21:24:08.893Z" },
+    { url = "https://files.pythonhosted.org/packages/ad/3a/37a0a051dd3c7298d9e149a489457a6196665444c1a1473ad4fa617e05af/kivy_deps.glew-0.3.1-cp312-cp312-win_amd64.whl", hash = "sha256:3acbbd30da05fc10c185b5d4bb75fbbc882a6ef2192963050c1c94d60a6e795a", size = 123573, upload-time = "2023-12-06T21:25:58.922Z" },
+]
+
+[[package]]
+name = "kivy-deps-sdl2"
+version = "0.8.0"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6e/0a/f34b1593977443e02e83343afb80d4a7d06fac394c1c60ac8590ed0e27c5/kivy_deps.sdl2-0.8.0-cp312-cp312-win_amd64.whl", hash = "sha256:bfe0cfca77883dde7e297b3b6039fa9cd7ee8df6b0d12516b38addb0551a574c", size = 4182249, upload-time = "2024-10-05T09:07:11.952Z" },
+]
+
+[[package]]
+name = "kivy-garden"
+version = "0.1.5"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "requests" },
+]
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6a/55/cd1555bde62f809219cbc5d8a0836b0293399da2f4ba4e8ee84b6a7cc393/Kivy_Garden-0.1.5-py3-none-any.whl", hash = "sha256:ef50f44b96358cf10ac5665f27a4751bb34ef54051c54b93af891f80afe42929", size = 4623, upload-time = "2022-03-23T23:25:33.752Z" },
+]
+
+[[package]]
+name = "kivymd"
+version = "2.0.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "asynckivy" },
+    { name = "kivy" },
+    { name = "materialshapes" },
+    { name = "materialyoucolor" },
+    { name = "pillow" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b6/74/9a4b44c1f0e1a7ec1becb4f5554dd1c2e683baae502895666ea9f2b52df5/kivymd-2.0.0.tar.gz", hash = "sha256:23c45c53c5cd0e6138277be8715851b3c19bc7556d8edc780c0e3f644cf38d13", size = 2169477, upload-time = "2026-08-06T05:44:49.82Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e6/59/337322d61404c74cafa8a4da71dfe01f84a5dffedda28ba5a4a306fc6430/kivymd-2.0.0-py3-none-any.whl", hash = "sha256:403be9715fba6258fb772206e6c9443dc71237881c56279e7b9a2f7bab99e11b", size = 2234352, upload-time = "2026-08-06T05:44:47.975Z" },
+]
+
+[[package]]
 name = "langchain"
 version = "1.3.10"
 source = { registry = "https://pypi.org/simple" }
@@ -1213,6 +1336,37 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/2f/e1/78ee7a023dac597a5825441ebd17170785a9dab23de95d2c7508ade94e0e/markupsafe-3.0.3-cp312-cp312-win32.whl", hash = "sha256:d88b440e37a16e651bda4c7c2b930eb586fd15ca7406cb39e211fcff3bf3017d", size = 14540, upload-time = "2025-09-27T18:36:38.761Z" },
     { url = "https://files.pythonhosted.org/packages/aa/5b/bec5aa9bbbb2c946ca2733ef9c4ca91c91b6a24580193e891b5f7dbe8e1e/markupsafe-3.0.3-cp312-cp312-win_amd64.whl", hash = "sha256:26a5784ded40c9e318cfc2bdb30fe164bdb8665ded9cd64d500a34fb42067b1c", size = 15105, upload-time = "2025-09-27T18:36:39.701Z" },
     { url = "https://files.pythonhosted.org/packages/e5/f1/216fc1bbfd74011693a4fd837e7026152e89c4bcf3e77b6692fba9923123/markupsafe-3.0.3-cp312-cp312-win_arm64.whl", hash = "sha256:35add3b638a5d900e807944a078b51922212fb3dedb01633a8defc4b01a3c85f", size = 13906, upload-time = "2025-09-27T18:36:40.689Z" },
+]
+
+[[package]]
+name = "materialshapes"
+version = "0.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "kivy" },
+    { name = "pillow" },
+    { name = "pycairo" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5c/70/8fe83033136092da1babf46222964980de564bb0893fce73ed8e42b71e49/materialshapes-0.3.tar.gz", hash = "sha256:141d4ceaaf4122379eb8147805d9a87e8e11bde90b03529cbae1a1689dfe6868", size = 25433, upload-time = "2025-07-14T18:53:24.176Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/73/16/19287efc5878ec8658269bb23d456f62774bbd57ffa4cb4602b34dd1e602/materialshapes-0.3-py3-none-any.whl", hash = "sha256:2aa1ef131bc67bbd1f6a1e03efd0419cf148fd204bff69a5b41bbce09fe0e2f4", size = 29131, upload-time = "2025-07-14T18:53:22.22Z" },
+]
+
+[[package]]
+name = "materialyoucolor"
+version = "3.0.4"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pillow" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/eb/23/2e63e7bdfcc1aa7ba955386ad09e3bd8a535a1092d7af501659b63cb6282/materialyoucolor-3.0.4.tar.gz", hash = "sha256:30b8dde034dce180845b0eaf52f72c5b22cd5b60bd7aff96804febae4e266276", size = 128892, upload-time = "2026-08-04T13:34:41.372Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/32/ad/a65deb27ccb3b858932515ca5c65cf070e81b6c1aafcbbcf39925c58ab46/materialyoucolor-3.0.4-cp312-cp312-macosx_10_13_x86_64.whl", hash = "sha256:31fd419db1e4f4eaaf8776b32908637657a3749ffc530e07cfd33b4f55a889f8", size = 216596, upload-time = "2026-08-05T19:53:53.674Z" },
+    { url = "https://files.pythonhosted.org/packages/9f/8a/12c6b10054b5890728028b5c695e1a5d882b6cddd0cc0f80b4b1a939d078/materialyoucolor-3.0.4-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:4381d71a4d82a015697408f8b6fa1cf2a4340a3395c3305e462ffcb3bb76ae69", size = 207226, upload-time = "2026-08-05T19:53:55.162Z" },
+    { url = "https://files.pythonhosted.org/packages/fa/2d/80fa01836807ab1a7376c35ab6c22ac0bbaba58738809457fa5b997d7e6b/materialyoucolor-3.0.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:f98b2625ec1c3f8330569dee54c827729ce7d29f6cbc1807f21717961a3b0937", size = 235269, upload-time = "2026-08-05T19:53:56.618Z" },
+    { url = "https://files.pythonhosted.org/packages/87/71/054b6a435f781961b18a968392cc12ae22fd2ffd23e694c951a65963413f/materialyoucolor-3.0.4-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:e4fd5cda653da8dc585353dff3909e605b7f5eedadc685acf9e76dd5d226c784", size = 1267645, upload-time = "2026-08-05T19:53:58.271Z" },
+    { url = "https://files.pythonhosted.org/packages/90/2e/d9a19b50e42b4d57b5cdd219767d48c2950f1abbd07bc41e12bf07505f59/materialyoucolor-3.0.4-cp312-cp312-win32.whl", hash = "sha256:60471c364271e8376dc17443766a0b6016be81a5bd48f3d6a7288204d62d202b", size = 354886, upload-time = "2026-08-05T19:53:59.643Z" },
+    { url = "https://files.pythonhosted.org/packages/5e/82/ef3f65168e5d08e5533388898cc0567a2f3de4132b81d9cf8e95a790f223/materialyoucolor-3.0.4-cp312-cp312-win_amd64.whl", hash = "sha256:6715a636eb4c38a66a55c2404667b67136cbf3ab177f245851898f959dc3cede", size = 376254, upload-time = "2026-08-05T19:54:01.028Z" },
 ]
 
 [[package]]
@@ -1599,6 +1753,15 @@ wheels = [
 ]
 
 [[package]]
+name = "plyer"
+version = "2.1.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/20/85/f61425aa9be1f9108eec1c13861c1e11c9a04eb786eb4832a8f7188317df/plyer-2.1.0.tar.gz", hash = "sha256:65b7dfb7e11e07af37a8487eb2aa69524276ef70dad500b07228ce64736baa61", size = 121371, upload-time = "2022-11-12T13:36:48.978Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d3/89/a41c2643fc8eabeb84791acb9d0e4d139b1e4b53473cc4dae947b5fa33ed/plyer-2.1.0-py2.py3-none-any.whl", hash = "sha256:1b1772060df8b3045ed4f08231690ec8f7de30f5a004aa1724665a9074eed113", size = 142266, upload-time = "2022-11-12T13:36:47.181Z" },
+]
+
+[[package]]
 name = "portalocker"
 version = "3.2.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1715,6 +1878,17 @@ wheels = [
 ]
 
 [[package]]
+name = "pycairo"
+version = "1.29.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/26/7c/ab4637b028d9ee12280ab9342f28310e613d5ca30c4d72d2aebeaa6a4969/pycairo-1.29.1.tar.gz", hash = "sha256:4fbd26b4af24c9787d84cf5448e34eb8dca064b732479aaecd03109520eebd5f", size = 666272, upload-time = "2026-08-07T08:45:50.095Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/72/f6/b6a2e016cf0df97b2cd094c228c9303af21d626993607d8ea750ea8b704b/pycairo-1.29.1-cp312-cp312-win32.whl", hash = "sha256:cf25a97a15bedd0cdabee5b18652de45eff70b4a7999416ed18dcee2144d17f5", size = 751363, upload-time = "2026-08-07T08:46:12.545Z" },
+    { url = "https://files.pythonhosted.org/packages/69/7e/7be1346df5ab8cd7f748f2d17d25d61f34550cfd141f60e8319e9c70df87/pycairo-1.29.1-cp312-cp312-win_amd64.whl", hash = "sha256:839cd8c98e1933426d8959168b466901b398bf4867454451023b93d91030cca9", size = 846004, upload-time = "2026-08-07T08:46:14.067Z" },
+    { url = "https://files.pythonhosted.org/packages/04/97/40966895bc12319ff3173cbb5d7876149a8e90e99bbf3b70e4af492c73a9/pycairo-1.29.1-cp312-cp312-win_arm64.whl", hash = "sha256:7cb6279cf0a7951ae9aaa21c6a0adff0fce62c0a68797b6a26a54f9a0859ad4d", size = 694560, upload-time = "2026-08-07T08:46:15.839Z" },
+]
+
+[[package]]
 name = "pycparser"
 version = "3.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1811,6 +1985,18 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/17/18/9947cc201af9ccf76720fd3347bf4f70eb882ce3fcf4cb05f7443e4cf871/pypdf-6.13.3.tar.gz", hash = "sha256:f3cb822769725f1bac658c406cfc9460399043f3750c2d3e4650e0a85eacabd7", size = 6484063, upload-time = "2026-06-17T15:22:00.898Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/94/56/2967e621598987905fb8cdfadd8f8de6b5c68c9351f0523c4df8409f28f1/pypdf-6.13.3-py3-none-any.whl", hash = "sha256:c6e3f86afb625791510b02ad5480e94b63970bb957df75d44657c282ecc52224", size = 347288, upload-time = "2026-06-17T15:21:59.512Z" },
+]
+
+[[package]]
+name = "pypiwin32"
+version = "223"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pywin32", marker = "sys_platform == 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/13/e8/4f38eb30c4dae36634a53c5b2cd73b517ea3607e10d00f61f2494449cec0/pypiwin32-223.tar.gz", hash = "sha256:71be40c1fbd28594214ecaecb58e7aa8b708eabfa0125c8a109ebd51edbd776a", size = 622, upload-time = "2018-02-26T00:43:23.994Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d0/1b/2f292bbd742e369a100c91faa0483172cd91a1a422a6692055ac920946c5/pypiwin32-223-py3-none-any.whl", hash = "sha256:67adf399debc1d5d14dffc1ab5acacb800da569754fafdc576b2a039485aa775", size = 1674, upload-time = "2018-02-26T00:43:23.108Z" },
 ]
 
 [[package]]

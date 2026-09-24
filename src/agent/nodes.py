@@ -5,6 +5,7 @@ from sentence_transformers import SentenceTransformer
 
 from src.agent.state import AgentState
 from src.config.setting import settings
+from src.crag_core.embedding_grader import grade_chunks_embedding
 from src.crag_core.generator import (
     generate_from_chunks,
     generate_from_web,
@@ -59,11 +60,19 @@ def make_nodes(model: SentenceTransformer, client: QdrantClient):
         start = time.time()
         query = state.get("rewritten_query") or state["query"]
 
-        relevant, irrelevant = grade_chunks_batch(
-            query,
-            state["chunks"],
-            threshold=settings.grader_threshold,
-        )
+        if settings.grader_mode == "embedding":
+            relevant, irrelevant = grade_chunks_embedding(
+                query,
+                state["chunks"],
+                model,  # модель эмбеддингов из замыкания make_nodes
+                threshold=settings.embedding_grader_threshold,
+            )
+        else:
+            relevant, irrelevant = grade_chunks_batch(
+                query,
+                state["chunks"],
+                threshold=settings.grader_threshold,
+            )
         duration = time.time() - start
         crag_grade_duration.observe(duration)
 
@@ -82,8 +91,10 @@ def make_nodes(model: SentenceTransformer, client: QdrantClient):
                     "relevant_count": len(relevant),
                     "irrelevant_count": len(irrelevant),
                     "avg_score": avg_score,
+                    "relevant_files": list({c.file_name for c in relevant}),
+                    "all_files": list({c.file_name for c in state["chunks"]}),
                 },
-                metadata={"duration_sec": duration},
+                metadata={"duration_sec": duration}
             )
 
         print(f"[grade] релевантных: {len(relevant)} / {len(state['chunks'])}")
